@@ -1,0 +1,166 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.status import *
+
+from .serializers import *
+
+from apps.app.models import *
+
+class PlaneAPIView(APIView):
+
+    def get(self, request):
+        plane = Plane.objects.all()
+        serializer = PlaneSerializer(plane, many=True)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def post(self, request):
+        serializer = PlaneSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+class PlaneDetailAPIView(APIView):
+
+    def get(self, request, pk):
+        plane = Plane.objects.get(pk=pk)
+        serializer = PlaneSerializer(plane)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def patch(self, request, pk):
+        plane = Plane.objects.get(pk=pk)
+        serializer = PlaneSerializer(plane, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_202_ACCEPTED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        plane = Plane.objects.get(pk=pk)
+        plane.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+#Airline
+class AirlineAPIView(APIView):
+    
+    def get(self, request):
+        airline = Airline.objects.all()
+        serializer = PlaneSerializer(airline, many=True)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def post(self, request):
+        serializer = AirlineSerializer(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+class AirlineDetailAPIView(APIView):
+
+    def get(self, request, pk):
+        airline = Airline.objects.get(pk=pk)
+        serializer = PlaneSerializer(airline)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def patch(self, request, pk):
+        airline = Airline.objects.get(pk=pk)
+        serializer = PlaneSerializer(airline, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_202_ACCEPTED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        airline = Airline.objects.get(pk=pk)
+        airline.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+#Flight
+
+class FlightAPIView(APIView):
+    
+    def get(self, request):
+        flight = Flight.objects.all()
+        serializer = PlaneSerializer(flight, many=True)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def post(self, request):
+        serializer = FlightSerializer(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+class FlightDetailAPIView(APIView):
+
+    def get(self, request, pk):
+        flight = Flight.objects.get(pk=pk)
+        serializer = PlaneSerializer(flight)
+        return Response(
+            serializer.data,
+            status=HTTP_200_OK
+        )
+
+    def patch(self, request, pk):
+        flight = Airline.objects.get(pk=pk)
+        serializer = PlaneSerializer(flight, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=HTTP_202_ACCEPTED
+            )
+        return Response(
+            serializer.errors,
+            status=HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        flight = Flight.objects.get(pk=pk)
+        flight.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
