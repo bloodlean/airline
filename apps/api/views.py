@@ -63,7 +63,7 @@ class AirlineAPIView(APIView):
     
     def get(self, request):
         airline = Airline.objects.all()
-        serializer = PlaneSerializer(airline, many=True)
+        serializer = AirlineSerializer(airline, many=True)
         return Response(
             serializer.data,
             status=HTTP_200_OK
@@ -86,7 +86,7 @@ class AirlineDetailAPIView(APIView):
 
     def get(self, request, pk):
         airline = Airline.objects.get(pk=pk)
-        serializer = PlaneSerializer(airline)
+        serializer = AirlineSerializer(airline)
         return Response(
             serializer.data,
             status=HTTP_200_OK
@@ -94,7 +94,7 @@ class AirlineDetailAPIView(APIView):
 
     def patch(self, request, pk):
         airline = Airline.objects.get(pk=pk)
-        serializer = PlaneSerializer(airline, data=request.data, partial=True)
+        serializer = AirlineSerializer(airline, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -117,7 +117,7 @@ class FlightAPIView(APIView):
     
     def get(self, request):
         flight = Flight.objects.all()
-        serializer = PlaneSerializer(flight, many=True)
+        serializer = FlightSerializer(flight, many=True)
         return Response(
             serializer.data,
             status=HTTP_200_OK
@@ -140,7 +140,7 @@ class FlightDetailAPIView(APIView):
 
     def get(self, request, pk):
         flight = Flight.objects.get(pk=pk)
-        serializer = PlaneSerializer(flight)
+        serializer = FlightSerializer(flight)
         return Response(
             serializer.data,
             status=HTTP_200_OK
@@ -148,7 +148,7 @@ class FlightDetailAPIView(APIView):
 
     def patch(self, request, pk):
         flight = Airline.objects.get(pk=pk)
-        serializer = PlaneSerializer(flight, data=request.data, partial=True)
+        serializer = FlightSerializer(flight, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(
