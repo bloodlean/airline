@@ -147,7 +147,7 @@ class FlightDetailAPIView(APIView):
         )
 
     def patch(self, request, pk):
-        flight = Airline.objects.get(pk=pk)
+        flight = Flight.objects.get(pk=pk)
         serializer = FlightSerializer(flight, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
